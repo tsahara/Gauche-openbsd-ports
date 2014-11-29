@@ -1,0 +1,19 @@
+$OpenBSD$
+--- configure.ac.orig	Sun Jul 20 06:11:12 2014
++++ configure.ac	Sat Nov 29 18:18:40 2014
+@@ -199,6 +199,15 @@ case $GAUCHE_THREAD_TYPE in
+       THREADDLLIBS="-lpthread -lrt"
+       GAUCHE_THREAD_TYPE=pthreads
+       ;;
++    *-*-openbsd*)
++      AC_MSG_WARN("Only on OpenBSD 5.6 or later.")
++      AC_DEFINE(GC_OPENBSD_THREADS,1,[Define to use OpenBSD threads])
++      AC_DEFINE(_REENTRANT)
++      AC_DEFINE(_PTHREADS)
++      THREADLIBS="-lpthread"
++      THREADDLLIBS="-lpthread"
++      GAUCHE_THREAD_TYPE=pthreads
++      ;;
+     *-*-solaris*)
+       AC_DEFINE(GC_SOLARIS_THREADS,1,[Define to use Solaris threads])
+       AC_DEFINE(GC_SOLARIS_PTHREADS,1,[Define to use Solaris pthreads])

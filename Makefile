@@ -4,7 +4,8 @@
 
 COMMENT =		a Scheme scripting engine
 
-DISTNAME =		Gauche-0.9.4
+V =			0.9.4
+DISTNAME =		Gauche-${V}
 CATEGORIES =		lang
 HOMEPAGE =		http://practical-scheme.net/gauche/
 MAINTAINER =		Tomoyuki Sahara <sahara@caddr.net>
@@ -12,6 +13,7 @@ MAINTAINER =		Tomoyuki Sahara <sahara@caddr.net>
 PERMIT_PACKAGE_CDROM =	Yes
 
 WANTLIB=		c m pthread util z
+SHARED_LIBS +=		gauche-0.9	0.4
 
 MASTER_SITES =		${MASTER_SITE_SOURCEFORGE:=gauche/}
 EXTRACT_SUFX =		.tgz
@@ -27,5 +29,8 @@ AUTOCONF_VERSION =	2.69
 
 # XXX: broken
 NO_TEST =		Yes
+
+BFDNAME =		${MACHINE_ARCH:S/amd64/x86_64/}-unknown-openbsd${OSREV}
+SUBST_VARS +=		BFDNAME V
 
 .include <bsd.port.mk>

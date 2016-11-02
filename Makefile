@@ -6,6 +6,7 @@ COMMENT =		a Scheme scripting engine
 
 V =			0.9.4
 DISTNAME =		Gauche-${V}
+PKGNAME =		${DISTNAME:L}
 CATEGORIES =		lang
 HOMEPAGE =		http://practical-scheme.net/gauche/
 MAINTAINER =		Tomoyuki Sahara <sahara@caddr.net>

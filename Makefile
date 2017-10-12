@@ -4,7 +4,7 @@
 
 COMMENT =		a Scheme scripting engine
 
-V =			0.9.4
+V =			0.9.5
 DISTNAME =		Gauche-${V}
 PKGNAME =		${DISTNAME:L}
 CATEGORIES =		lang
@@ -14,7 +14,7 @@ MAINTAINER =		Tomoyuki Sahara <sahara@caddr.net>
 PERMIT_PACKAGE_CDROM =	Yes
 
 WANTLIB=		c m pthread util z
-SHARED_LIBS +=		gauche-0.9	0.4
+SHARED_LIBS +=		gauche-0.9	0.5
 
 MASTER_SITES =		${MASTER_SITE_SOURCEFORGE:=gauche/}
 EXTRACT_SUFX =		.tgz
@@ -25,7 +25,7 @@ EXTRACT_SUFX =		.tgz
 #TEST_DEPENDS =		???
 
 CONFIGURE_STYLE =	gnu autoconf no-autoheader
-CONFIGURE_ARGS +=	--enable-threads=pthreads
+#CONFIGURE_ARGS +=	--enable-threads=none
 AUTOCONF_VERSION =	2.69
 
 # XXX: broken

@@ -25,7 +25,7 @@ EXTRACT_SUFX =		.tgz
 #TEST_DEPENDS =		???
 
 CONFIGURE_STYLE =	gnu autoconf no-autoheader
-CONFIGURE_ARGS +=	--enable-threads=none
+CONFIGURE_ARGS +=	--disable-threads
 AUTOCONF_VERSION =	2.69
 USE_GMAKE =		Yes
 

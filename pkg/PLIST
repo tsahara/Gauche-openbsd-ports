@@ -5,6 +5,7 @@ bin/gauche-install
 bin/gauche-package
 @bin bin/gosh
 info/gauche-refe.info-1.gz
+info/gauche-refe.info-10.gz
 info/gauche-refe.info-2.gz
 info/gauche-refe.info-3.gz
 info/gauche-refe.info-4.gz
@@ -17,6 +18,7 @@ info/gauche-refe.info.gz
 info/gauche-refj.info-1.gz
 info/gauche-refj.info-10.gz
 info/gauche-refj.info-11.gz
+info/gauche-refj.info-12.gz
 info/gauche-refj.info-2.gz
 info/gauche-refj.info-3.gz
 info/gauche-refj.info-4.gz
@@ -97,6 +99,7 @@ lib/gauche-0.9/${V}/${BFDNAME}/dbm--ndbm.so
 lib/gauche-0.9/${V}/${BFDNAME}/file--util.so
 lib/gauche-0.9/${V}/${BFDNAME}/gauche--charconv.so
 lib/gauche-0.9/${V}/${BFDNAME}/gauche--collection.so
+lib/gauche-0.9/${V}/${BFDNAME}/gauche--dictionary.so
 lib/gauche-0.9/${V}/${BFDNAME}/gauche--fcntl.so
 lib/gauche-0.9/${V}/${BFDNAME}/gauche--generator.so
 lib/gauche-0.9/${V}/${BFDNAME}/gauche--hook.so
@@ -116,6 +119,9 @@ lib/gauche-0.9/${V}/${BFDNAME}/gauche-install
 lib/gauche-0.9/${V}/${BFDNAME}/gauche-package
 @bin lib/gauche-0.9/${V}/${BFDNAME}/gosh
 lib/gauche-0.9/${V}/${BFDNAME}/libgauche-0.9.so
+lib/gauche-0.9/${V}/${BFDNAME}/libgauche-0.9.so.0
+@lib lib/gauche-0.9/${V}/${BFDNAME}/libgauche-0.9.so.${LIBgauche-0.9_VERSION}
+lib/gauche-0.9/${V}/${BFDNAME}/libgauche-static-0.9.a
 lib/gauche-0.9/${V}/${BFDNAME}/math--mt-random.so
 lib/gauche-0.9/${V}/${BFDNAME}/os--windows.so
 lib/gauche-0.9/${V}/${BFDNAME}/parser--peg.so
@@ -123,6 +129,7 @@ lib/gauche-0.9/${V}/${BFDNAME}/rfc--822.so
 lib/gauche-0.9/${V}/${BFDNAME}/rfc--md5.so
 lib/gauche-0.9/${V}/${BFDNAME}/rfc--mime.so
 lib/gauche-0.9/${V}/${BFDNAME}/rfc--sha.so
+lib/gauche-0.9/${V}/${BFDNAME}/rfc--tls--mbed.so
 lib/gauche-0.9/${V}/${BFDNAME}/rfc--tls.so
 lib/gauche-0.9/${V}/${BFDNAME}/rfc--zlib.so
 lib/gauche-0.9/${V}/${BFDNAME}/srfi-1.so
@@ -142,6 +149,7 @@ lib/gauche-0.9/site/${BFDNAME}/
 lib/libgauche-0.9.so
 lib/libgauche-0.9.so.0
 @lib lib/libgauche-0.9.so.${LIBgauche-0.9_VERSION}
+lib/libgauche-static-0.9.a
 @man man/man1/gauche-cesconv.1
 @man man/man1/gauche-config.1
 @man man/man1/gauche-install.1
@@ -164,6 +172,7 @@ share/gauche-0.9/${V}/lib/compat/
 share/gauche-0.9/${V}/lib/compat/chibi-test.scm
 share/gauche-0.9/${V}/lib/compat/jfilter.scm
 share/gauche-0.9/${V}/lib/compat/norational.scm
+share/gauche-0.9/${V}/lib/compat/r7rs-srfi-tests.scm
 share/gauche-0.9/${V}/lib/compat/stk.scm
 share/gauche-0.9/${V}/lib/control/
 share/gauche-0.9/${V}/lib/control/job.scm
@@ -259,7 +268,7 @@ share/gauche-0.9/${V}/lib/gauche/parameter.scm
 share/gauche-0.9/${V}/lib/gauche/parseopt.scm
 share/gauche-0.9/${V}/lib/gauche/partcont.scm
 share/gauche-0.9/${V}/lib/gauche/portutil.scm
-share/gauche-0.9/${V}/lib/gauche/pp.scm
+share/gauche-0.9/${V}/lib/gauche/pputil.scm
 share/gauche-0.9/${V}/lib/gauche/procedure.scm
 share/gauche-0.9/${V}/lib/gauche/process.scm
 share/gauche-0.9/${V}/lib/gauche/record.scm
@@ -281,6 +290,7 @@ share/gauche-0.9/${V}/lib/gauche/termios.scm
 share/gauche-0.9/${V}/lib/gauche/test/
 share/gauche-0.9/${V}/lib/gauche/test.scm
 share/gauche-0.9/${V}/lib/gauche/test/generative.scm
+share/gauche-0.9/${V}/lib/gauche/test/script.scm
 share/gauche-0.9/${V}/lib/gauche/threads.scm
 share/gauche-0.9/${V}/lib/gauche/time.scm
 share/gauche-0.9/${V}/lib/gauche/treeutil.scm
@@ -305,7 +315,10 @@ share/gauche-0.9/${V}/lib/math/const.scm
 share/gauche-0.9/${V}/lib/math/mt-random.scm
 share/gauche-0.9/${V}/lib/math/prime.scm
 share/gauche-0.9/${V}/lib/os/
+share/gauche-0.9/${V}/lib/os/windows/
 share/gauche-0.9/${V}/lib/os/windows.scm
+share/gauche-0.9/${V}/lib/os/windows/console/
+share/gauche-0.9/${V}/lib/os/windows/console/codepage.scm
 share/gauche-0.9/${V}/lib/parser/
 share/gauche-0.9/${V}/lib/parser/peg.scm
 share/gauche-0.9/${V}/lib/precomp
@@ -326,25 +339,39 @@ share/gauche-0.9/${V}/lib/rfc/mime.scm
 share/gauche-0.9/${V}/lib/rfc/quoted-printable.scm
 share/gauche-0.9/${V}/lib/rfc/sha.scm
 share/gauche-0.9/${V}/lib/rfc/sha1.scm
+share/gauche-0.9/${V}/lib/rfc/tls/
 share/gauche-0.9/${V}/lib/rfc/tls.scm
+share/gauche-0.9/${V}/lib/rfc/tls/mbed.scm
 share/gauche-0.9/${V}/lib/rfc/uri.scm
 share/gauche-0.9/${V}/lib/rfc/zlib.scm
 share/gauche-0.9/${V}/lib/scheme/
 share/gauche-0.9/${V}/lib/scheme/base.scm
+share/gauche-0.9/${V}/lib/scheme/box.scm
 share/gauche-0.9/${V}/lib/scheme/case-lambda.scm
 share/gauche-0.9/${V}/lib/scheme/char.scm
+share/gauche-0.9/${V}/lib/scheme/charset.scm
+share/gauche-0.9/${V}/lib/scheme/comparator.scm
 share/gauche-0.9/${V}/lib/scheme/complex.scm
 share/gauche-0.9/${V}/lib/scheme/cxr.scm
 share/gauche-0.9/${V}/lib/scheme/eval.scm
 share/gauche-0.9/${V}/lib/scheme/file.scm
+share/gauche-0.9/${V}/lib/scheme/generator.scm
+share/gauche-0.9/${V}/lib/scheme/hash-table.scm
+share/gauche-0.9/${V}/lib/scheme/ideque.scm
 share/gauche-0.9/${V}/lib/scheme/inexact.scm
 share/gauche-0.9/${V}/lib/scheme/lazy.scm
+share/gauche-0.9/${V}/lib/scheme/list-queue.scm
+share/gauche-0.9/${V}/lib/scheme/list.scm
 share/gauche-0.9/${V}/lib/scheme/load.scm
+share/gauche-0.9/${V}/lib/scheme/lseq.scm
 share/gauche-0.9/${V}/lib/scheme/process-context.scm
 share/gauche-0.9/${V}/lib/scheme/r5rs.scm
 share/gauche-0.9/${V}/lib/scheme/read.scm
 share/gauche-0.9/${V}/lib/scheme/repl.scm
+share/gauche-0.9/${V}/lib/scheme/set.scm
+share/gauche-0.9/${V}/lib/scheme/sort.scm
 share/gauche-0.9/${V}/lib/scheme/time.scm
+share/gauche-0.9/${V}/lib/scheme/vector.scm
 share/gauche-0.9/${V}/lib/scheme/write.scm
 share/gauche-0.9/${V}/lib/slib.scm
 share/gauche-0.9/${V}/lib/srfi/
@@ -358,15 +385,29 @@ share/gauche-0.9/${V}/lib/srfi-114.scm
 share/gauche-0.9/${V}/lib/srfi-117.scm
 share/gauche-0.9/${V}/lib/srfi-118.scm
 share/gauche-0.9/${V}/lib/srfi-121.scm
+share/gauche-0.9/${V}/lib/srfi-125.scm
+share/gauche-0.9/${V}/lib/srfi-127.scm
 share/gauche-0.9/${V}/lib/srfi-128.scm
+share/gauche-0.9/${V}/lib/srfi-129.scm
 share/gauche-0.9/${V}/lib/srfi-13.scm
 share/gauche-0.9/${V}/lib/srfi-131.scm
+share/gauche-0.9/${V}/lib/srfi-132.scm
 share/gauche-0.9/${V}/lib/srfi-133.scm
 share/gauche-0.9/${V}/lib/srfi-134.scm
 share/gauche-0.9/${V}/lib/srfi-14/
 share/gauche-0.9/${V}/lib/srfi-14.scm
 share/gauche-0.9/${V}/lib/srfi-14/query.scm
 share/gauche-0.9/${V}/lib/srfi-14/set.scm
+share/gauche-0.9/${V}/lib/srfi-141.scm
+share/gauche-0.9/${V}/lib/srfi-143.scm
+share/gauche-0.9/${V}/lib/srfi-146/
+share/gauche-0.9/${V}/lib/srfi-146.scm
+share/gauche-0.9/${V}/lib/srfi-146/hash.scm
+share/gauche-0.9/${V}/lib/srfi-151.scm
+share/gauche-0.9/${V}/lib/srfi-152.scm
+share/gauche-0.9/${V}/lib/srfi-154.scm
+share/gauche-0.9/${V}/lib/srfi-155.scm
+share/gauche-0.9/${V}/lib/srfi-158.scm
 share/gauche-0.9/${V}/lib/srfi-18.scm
 share/gauche-0.9/${V}/lib/srfi-19.scm
 share/gauche-0.9/${V}/lib/srfi-25.scm
@@ -385,10 +426,14 @@ share/gauche-0.9/${V}/lib/srfi-43.scm
 share/gauche-0.9/${V}/lib/srfi-5.scm
 share/gauche-0.9/${V}/lib/srfi-55.scm
 share/gauche-0.9/${V}/lib/srfi-60.scm
+share/gauche-0.9/${V}/lib/srfi-64.scm
+share/gauche-0.9/${V}/lib/srfi-66.scm
 share/gauche-0.9/${V}/lib/srfi-69.scm
 share/gauche-0.9/${V}/lib/srfi-7.scm
+share/gauche-0.9/${V}/lib/srfi-74.scm
 share/gauche-0.9/${V}/lib/srfi-78.scm
 share/gauche-0.9/${V}/lib/srfi-9.scm
+share/gauche-0.9/${V}/lib/srfi-96.scm
 share/gauche-0.9/${V}/lib/srfi-98.scm
 share/gauche-0.9/${V}/lib/srfi-99.scm
 share/gauche-0.9/${V}/lib/srfi/0.scm
@@ -403,12 +448,24 @@ share/gauche-0.9/${V}/lib/srfi/114.scm
 share/gauche-0.9/${V}/lib/srfi/117.scm
 share/gauche-0.9/${V}/lib/srfi/118.scm
 share/gauche-0.9/${V}/lib/srfi/121.scm
+share/gauche-0.9/${V}/lib/srfi/125.scm
+share/gauche-0.9/${V}/lib/srfi/127.scm
 share/gauche-0.9/${V}/lib/srfi/128.scm
+share/gauche-0.9/${V}/lib/srfi/129.scm
 share/gauche-0.9/${V}/lib/srfi/13.scm
 share/gauche-0.9/${V}/lib/srfi/131.scm
+share/gauche-0.9/${V}/lib/srfi/132.scm
 share/gauche-0.9/${V}/lib/srfi/133.scm
 share/gauche-0.9/${V}/lib/srfi/134.scm
 share/gauche-0.9/${V}/lib/srfi/14.scm
+share/gauche-0.9/${V}/lib/srfi/141.scm
+share/gauche-0.9/${V}/lib/srfi/143.scm
+share/gauche-0.9/${V}/lib/srfi/145.scm
+share/gauche-0.9/${V}/lib/srfi/146.scm
+share/gauche-0.9/${V}/lib/srfi/149.scm
+share/gauche-0.9/${V}/lib/srfi/151.scm
+share/gauche-0.9/${V}/lib/srfi/152.scm
+share/gauche-0.9/${V}/lib/srfi/158.scm
 share/gauche-0.9/${V}/lib/srfi/16.scm
 share/gauche-0.9/${V}/lib/srfi/17.scm
 share/gauche-0.9/${V}/lib/srfi/18.scm
@@ -441,13 +498,17 @@ share/gauche-0.9/${V}/lib/srfi/6.scm
 share/gauche-0.9/${V}/lib/srfi/60.scm
 share/gauche-0.9/${V}/lib/srfi/61.scm
 share/gauche-0.9/${V}/lib/srfi/62.scm
+share/gauche-0.9/${V}/lib/srfi/64.scm
+share/gauche-0.9/${V}/lib/srfi/66.scm
 share/gauche-0.9/${V}/lib/srfi/69.scm
 share/gauche-0.9/${V}/lib/srfi/7.scm
+share/gauche-0.9/${V}/lib/srfi/74.scm
 share/gauche-0.9/${V}/lib/srfi/78.scm
 share/gauche-0.9/${V}/lib/srfi/8.scm
 share/gauche-0.9/${V}/lib/srfi/87.scm
 share/gauche-0.9/${V}/lib/srfi/9.scm
 share/gauche-0.9/${V}/lib/srfi/95.scm
+share/gauche-0.9/${V}/lib/srfi/96.scm
 share/gauche-0.9/${V}/lib/srfi/98.scm
 share/gauche-0.9/${V}/lib/srfi/99.scm
 share/gauche-0.9/${V}/lib/sxml/
@@ -461,6 +522,7 @@ share/gauche-0.9/${V}/lib/sxml/tree-trans.scm
 share/gauche-0.9/${V}/lib/text/
 share/gauche-0.9/${V}/lib/text/console/
 share/gauche-0.9/${V}/lib/text/console.scm
+share/gauche-0.9/${V}/lib/text/console/generic.scm
 share/gauche-0.9/${V}/lib/text/console/windows.scm
 share/gauche-0.9/${V}/lib/text/csv.scm
 share/gauche-0.9/${V}/lib/text/diff.scm
@@ -472,6 +534,7 @@ share/gauche-0.9/${V}/lib/text/line-edit.scm
 share/gauche-0.9/${V}/lib/text/parse.scm
 share/gauche-0.9/${V}/lib/text/progress.scm
 share/gauche-0.9/${V}/lib/text/sql.scm
+share/gauche-0.9/${V}/lib/text/template.scm
 share/gauche-0.9/${V}/lib/text/tr.scm
 share/gauche-0.9/${V}/lib/text/tree.scm
 share/gauche-0.9/${V}/lib/text/unicode/
